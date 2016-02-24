@@ -1,0 +1,33 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.jianghua.viewpagerwithhead.fragment.TestFragment">
+
+    <in.srain.cube.views.ptr.PtrClassicFrameLayout
+        xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fm_test_ptrLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        cube_ptr:ptr_duration_to_close="1500"
+        cube_ptr:ptr_duration_to_close_header="1500"
+        cube_ptr:ptr_keep_header_when_refresh="true"
+        cube_ptr:ptr_pull_to_fresh="false"
+        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+        cube_ptr:ptr_resistance="1.7">
+
+        <ListView
+            android:id="@+id/fm_test_listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:choiceMode="singleChoice"
+            android:fadingEdge="none"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:scrollbarStyle="outsideOverlay" />
+
+    </in.srain.cube.views.ptr.PtrClassicFrameLayout>
+
+</FrameLayout>

@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ViewPagerWithHead</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="refreshing">正在刷新...</string>
+    <string name="release">松开刷新</string>
+</resources>
