@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MainActivity extends AppCompatActivity implements TestFragment.OnListViewIsTop{
+public class MainActivity extends AppCompatActivity implements TestFragment.OnListViewIsTop, ViewPager.OnPageChangeListener {
 
     private Context mContext;
     private RelativeLayout mRootView;
@@ -41,12 +41,13 @@ public class MainActivity extends AppCompatActivity implements TestFragment.OnLi
     private float mLastScroll = 0;
     private boolean mGoInFlag = false;
     private boolean mListTop = true;
-    private int mLimit;  //下滑进入listView的界限
+    private int mLimit;  //下滑进入listView的界限的高度
 
     private Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
+                //重置viewpager的高度
                 LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, msg.arg2 - msg.arg1 - DensityUtil.dip2px(mContext, 40));
                 mViewPager.setLayoutParams(params);
             }
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements TestFragment.OnLi
         initView();
     }
 
-    private void initData(){
+    private void initData() {
         mFragments = new ArrayList<>();
         mTitle = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements TestFragment.OnLi
         }
     }
 
-    private void initView(){
+    private void initView() {
         mRootView = (RelativeLayout) findViewById(R.id.rootView);
         mTabStrip = (PagerSlidingTabStrip) findViewById(R.id.main_tab);
         mViewPager = (ViewPager) findViewById(R.id.main_viewPager);
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements TestFragment.OnLi
         SlidingPagerAdapter adapter = new SlidingPagerAdapter(getSupportFragmentManager(), mFragments, mTitle);
         mViewPager.setAdapter(adapter);
         mViewPager.setOffscreenPageLimit(4);
+        mViewPager.addOnPageChangeListener(this);
 
         mTabStrip.setViewPager(mViewPager);
         mTabStrip.setIndicatorColor(getResources().getColor(R.color.green));
@@ -124,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements TestFragment.OnLi
     }
 
     /**
-     * 必须在设置简介后获取
+     * 获取头部高度
      */
     private void getLimitHeight() {
         findViewById(R.id.main_header).post(new Runnable() {
@@ -148,20 +150,19 @@ public class MainActivity extends AppCompatActivity implements TestFragment.OnLi
             if (mScrollView.getScrollY() == mLimit && mListTop) {
                 mScrollView.setIfIntercept(false);
             }
-            mScrollView.setOrt(true);
+            mScrollView.setOrientation(true);
         } else {
-            mScrollView.setOrt(false);
+            mScrollView.setOrientation(false);
         }
 
         if (ev.getAction() == MotionEvent.ACTION_UP) {
             mLastScroll = 0;
-            mScrollView.setOrt(false);
+            mScrollView.setOrientation(false);
         } else {
             mLastScroll = ev.getRawY();
         }
         return super.dispatchTouchEvent(ev);
     }
-
 
     @Override
     public void isTop(boolean ifTop) {
@@ -181,5 +182,20 @@ public class MainActivity extends AppCompatActivity implements TestFragment.OnLi
             mTimer = null;
         }
         super.onDestroy();
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        mListTop = true;
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+
     }
 }

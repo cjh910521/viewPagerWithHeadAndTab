@@ -42,12 +42,12 @@ public class TestFragment extends Fragment implements AbsListView.OnScrollListen
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_test, container, false);
 
+        onListViewIsTop = (OnListViewIsTop) getActivity();
         initView(inflater, view);
         initPtr(inflater);
 
         return view;
     }
-
 
     private void initView(LayoutInflater inflater, View view) {
         mPtrLayout = (PtrClassicFrameLayout) view.findViewById(R.id.fm_test_ptrLayout);
@@ -55,7 +55,7 @@ public class TestFragment extends Fragment implements AbsListView.OnScrollListen
         View listHeader = inflater.inflate(R.layout.list_empty_header_layout, null);  //添加一个空的头部，避免上滑时第一个item显示不全
         mListView.addHeaderView(listHeader);
         mListView.setOnScrollListener(this);
-        mListView.setFocusable(false); //左右滑动才能不跳到头部
+        mListView.setFocusable(false); //左右滑动时才能不跳到头部
 
         List<String> list = new ArrayList();
         for (int i = 0; i < 20; i++) {
@@ -64,6 +64,10 @@ public class TestFragment extends Fragment implements AbsListView.OnScrollListen
         mListView.setAdapter(new ListAdapter(list, getActivity()));
     }
 
+    /**
+     * 设置下拉刷新
+     * @param inflater
+     */
     private void initPtr(LayoutInflater inflater) {
         View header = inflater.inflate(R.layout.fm_test_ptrhead_layout, null);
         mPtrText = (TextView) header.findViewById(R.id.loading_text);
@@ -89,16 +93,6 @@ public class TestFragment extends Fragment implements AbsListView.OnScrollListen
                 }, 1000);
             }
         });
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            onListViewIsTop = (OnListViewIsTop) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString() + " must implement IndexListener");
-        }
     }
 
     @Override
