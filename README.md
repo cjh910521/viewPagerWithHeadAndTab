@@ -1,4 +1,4 @@
 # viewPagerWithHeadAndTab
 ViewPager with head and tab
 
-![ABC](http://github.com/cjh910521/viewPagerWithHeadAndTab/preview.gif)
+![image](https://github.com/cjh910521/viewPagerWithHeadAndTab/blob/master/preview.gif?raw=true)
