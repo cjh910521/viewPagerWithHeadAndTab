@@ -1,16 +1,19 @@
 package com.jianghua.viewpagerwithhead.fragment;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.jianghua.viewpagerwithhead.R;
+import com.jianghua.viewpagerwithhead.activity.TestActivity;
 import com.jianghua.viewpagerwithhead.adapter.ListAdapter;
 
 import java.util.ArrayList;
@@ -56,6 +59,13 @@ public class TestFragment extends Fragment implements AbsListView.OnScrollListen
         mListView.addHeaderView(listHeader);
         mListView.setOnScrollListener(this);
         mListView.setFocusable(false); //左右滑动时才能不跳到头部
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent(getContext(), TestActivity.class);
+                startActivity(intent);
+            }
+        });
 
         List<String> list = new ArrayList();
         for (int i = 0; i < 20; i++) {
